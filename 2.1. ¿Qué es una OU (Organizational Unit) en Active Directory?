@@ -1,0 +1,98 @@
+````markdown
+# Guía de Unidades Organizativas (OUs) en Active Directory
+
+## 📘 ¿Qué es una OU (Organizational Unit) en Active Directory?
+
+Una **Unidad Organizativa (OU)** es una estructura lógica dentro de **Active Directory** que permite organizar y administrar objetos (como usuarios, grupos, computadoras, etc.) de manera jerárquica y segmentada.
+
+## 🧠 Piensa en esto:
+
+Imagina que **Active Directory** es como una gran empresa, y dentro de esa empresa, necesitas organizar todos los recursos de manera ordenada. Las **OUs** funcionan como **departamentos** o **áreas** dentro de esa empresa.
+
+### ¿Qué te permiten las OUs?
+
+- **Separar a los usuarios y PCs por departamento o función.**
+- **Aplicar diferentes políticas de seguridad (GPOs)** a cada grupo o departamento.
+- **Delegar la administración** de ciertos recursos (por ejemplo, que alguien administre solo los usuarios de "Soporte Técnico").
+
+## 🔧 ¿Qué puedo poner dentro de una OU?
+
+Dentro de una **OU**, puedes almacenar varios objetos de Active Directory, tales como:
+
+- **Usuarios** (ej. `juanperez`)
+- **Computadoras** (ej. `PC-Marketing01`)
+- **Grupos** (ej. `GRP_RRHH`)
+- **Otras OUs** (puedes crear sub-OUs dentro de una OU principal).
+
+## 📋 Ejemplo práctico:
+
+Imagina la siguiente estructura jerárquica en un dominio llamado `empresa.local`:
+
+```yaml
+empresa.local
+│
+├── IT
+│   ├── Usuario: jperez
+│   └── Grupo: GRP_IT
+│
+├── RRHH
+│   ├── Usuario: clopez
+│   └── Grupo: GRP_RRHH
+│
+└── Equipos
+    ├── PC001
+    └── PC002
+````
+
+Con esta organización, puedes aplicar políticas específicas a "RRHH" sin que afecten a "IT". Esta separación te da un control más granular sobre los accesos y configuraciones de seguridad.
+
+---
+
+## 🛡️ **Importancia en Seguridad**
+
+### **Controles de Seguridad Relevantes**
+
+#### **CIS Control 5: Administrar Cuentas**
+
+Las OUs permiten segmentar y gestionar las cuentas de usuario de manera eficiente. Al separar usuarios por departamentos y asignarles diferentes permisos, se facilita el cumplimiento con el **CIS Control 5**, que promueve la gestión efectiva de cuentas de usuario.
+
+#### **NIST SP 800-53 PR.AC-1: Control de Acceso**
+
+Las OUs son fundamentales para aplicar **controles de acceso lógico**. Puedes establecer **políticas de acceso específicas** por OU, asegurando que solo los usuarios autorizados tengan acceso a recursos críticos. Esto es un requisito en el **control PR.AC-1** de NIST, que establece la necesidad de controles de acceso apropiados.
+
+#### **ISO/IEC 27001:2022 A.5: Organización de la Seguridad de la Información**
+
+La segmentación del dominio a través de OUs es esencial para implementar un sistema de **organización de la seguridad de la información**. Esto permite asignar roles y responsabilidades de manera eficiente, facilitando el cumplimiento con **ISO/IEC 27001 A.5**.
+
+#### **ISO/IEC 27001:2022 A.9: Control de Acceso**
+
+En cumplimiento con **ISO/IEC 27001 A.9**, las OUs facilitan la aplicación de **políticas de control de acceso**, asegurando que los usuarios solo tengan acceso a los recursos necesarios según su rol dentro de la organización. Esto contribuye a la implementación de controles de acceso basados en el principio de **mínimo privilegio**.
+
+---
+
+## **Beneficios de las OUs para la Seguridad**
+
+| **Ventaja**                             | **Descripción**                                                 |
+| --------------------------------------- | --------------------------------------------------------------- |
+| **Seguridad Mejorada**                  | Segmentación de privilegios y control específico de acceso.     |
+| **Delegación de Administración**        | Permite delegar la administración de cada área o departamento.  |
+| **Cumplimiento Normativo**              | Cumple con los controles de **CIS**, **ISO 27001** y **NIST**.  |
+| **Aplicación de Políticas Específicas** | Facilita la aplicación de **GPOs** y políticas de seguridad.    |
+| **Organización Eficiente**              | Mejora la gestión de usuarios, grupos, computadoras y recursos. |
+
+---
+
+## Resumen:
+
+Las **OUs** son una herramienta esencial dentro de **Active Directory** para organizar y administrar usuarios, grupos y recursos. Además de facilitar una mejor administración, también proporcionan una capa extra de seguridad al permitir aplicar políticas específicas y delegar administración de manera más controlada.
+
+Con su implementación, puedes cumplir con normativas de seguridad importantes como **CIS**, **NIST** y **ISO 27001**, asegurando que los controles de acceso y la gestión de privilegios estén alineados con los estándares más altos.
+
+---
+
+¡Sigue esta guía para organizar de manera efectiva tu **Active Directory** y mejorar la seguridad de tu infraestructura!
+
+```
+
+Este formato está listo para un archivo `README.md` y se enfoca en explicar qué son las **OUs**, su funcionamiento y cómo contribuyen a la seguridad, destacando las prácticas recomendadas de **CIS**, **NIST** y **ISO 27001**. ¿Te gustaría ajustar algún detalle adicional o agregar algo más?
+```

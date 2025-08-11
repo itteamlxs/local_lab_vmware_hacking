@@ -1,0 +1,98 @@
+# Guía de Implementación de Seguridad - Estructuración del Dominio y Gestión de Usuarios
+
+## Fase 2: Estructurar el Dominio
+
+### 🎯 Objetivo:
+El objetivo de esta fase es organizar el dominio mediante la creación de Unidades Organizativas (OUs) por departamento, lo que permitirá una gestión eficiente de usuarios y una base sólida para aplicar Políticas de Grupo (GPOs) y controles de acceso. Este paso es fundamental para asegurar que el dominio está correctamente segmentado y preparado para aplicar políticas específicas de seguridad.
+
+### 🧱 1. Crear la Estructura de OUs (Unidades Organizativas)
+
+Las OUs son fundamentales para organizar y gestionar de forma efectiva los objetos dentro del Active Directory. En este paso, se crearán las OUs correspondientes a los diferentes departamentos de la organización. 
+
+#### Pasos:
+
+1. Abre "Usuarios y Equipos de Active Directory" (`dsa.msc`).
+2. Haz clic derecho sobre el dominio (ej. `empresa.local`) > Nuevo > Unidad Organizativa.
+3. Crea las siguientes OUs (una por una):
+    - IT
+    - Contabilidad
+    - Gerencia
+    - AtenciónCliente
+    - SoporteTecnico
+    - RRHH
+    - Marketing
+    - Servidores
+    - Grupos
+    - UsuariosGenerales
+    - Equipos
+
+⚠️ **Recomendación:** Evita usar espacios en los nombres de las OUs. Es preferible usar mayúsculas o camelCase (ej. `SoporteTecnico`, `UsuariosGenerales`) para mejorar la compatibilidad con scripts y GPOs.
+
+### 🧍‍♂️ 2. Crear Usuarios Básicos por Departamento
+
+Una vez que las OUs han sido creadas, es hora de agregar usuarios básicos para probar el funcionamiento del sistema.
+
+#### Pasos:
+
+1. Haz clic derecho en la OU deseada (ej. `IT`) > Nuevo > Usuario.
+2. Completa los datos del usuario (ej.):
+   - Nombre: Juan
+   - Apellido: Pérez
+   - Nombre de inicio de sesión: `jperez`
+   - Establece una contraseña fuerte (ej. `JPerez2025!`).
+   - Marca la opción: "El usuario debe cambiar la contraseña en el siguiente inicio de sesión".
+   
+3. Repite este proceso para crear al menos 1 o 2 usuarios por cada OU.
+
+✅ **Recomendación:** No pongas todos los usuarios en la OU por defecto `Users`, organiza a los usuarios en las OUs correspondientes. Esto es clave para una administración eficiente y para aplicar políticas de seguridad personalizadas.
+
+### 🔐 3. Crear Grupos de Seguridad por Departamento
+
+Los grupos de seguridad permiten delegar permisos y asignar políticas de manera eficiente a los usuarios de cada departamento.
+
+#### Pasos:
+
+1. Ve a la OU `Grupos` en el "Usuarios y Equipos de Active Directory".
+2. Por cada departamento, crea un grupo de seguridad. Ejemplo:
+   - GRP_IT
+   - GRP_Contabilidad
+   - GRP_Gerencia
+   - GRP_AtencionCliente
+
+3. Asocia los usuarios a sus respectivos grupos:
+   - Haz clic derecho en el grupo > Propiedades > Miembros > Agregar...
+   
+Esto es esencial para delegar permisos, asignar GPOs y mantener un control centralizado.
+
+### ✅ Estado hasta aquí:
+
+| Elemento                        | ¿Listo?  |
+|----------------------------------|----------|
+| OU por departamento              | ✅       |
+| Usuarios de prueba creados       | ✅       |
+| Grupos de seguridad creados      | ✅       |
+| Usuarios añadidos a grupos       | ✅       |
+
+Cuando termines este paso, escribe "Siguiente paso" para continuar con la **Fase 3: Crear GPOs Base** (seguridad, contraseñas, bloqueo, etc.).
+
+---
+
+## Enfoque en los Controles de Seguridad:
+
+### CIS Control 5: Administrar Cuentas
+La creación de OUs y la asignación de usuarios a grupos permite un control más granular sobre las cuentas, lo que es un cumplimiento directo con el CIS Control 5. Además, la implementación de contraseñas fuertes y la obligación de cambio de contraseña cumplen con los requisitos de este control.
+
+### NIST SP 800-53 PR.AC-1: Control de Acceso
+La estructura organizada por OUs permite aplicar controles de acceso basados en roles (RBAC), que es un principio clave del control PR.AC-1 de NIST. De este modo, se asegura que solo los usuarios autorizados tienen acceso a recursos específicos.
+
+### ISO/IEC 27001:2022 A.5: Organización de la Seguridad de la Información
+La segmentación del dominio en diferentes OUs es una práctica recomendada en la ISO/IEC 27001:2022 A.5, ya que permite organizar de forma efectiva la seguridad de la información, aplicando políticas específicas a cada unidad o área de la organización.
+
+### ISO/IEC 27001:2022 A.9: Control de Acceso
+La creación de OUs y grupos de seguridad ayuda a gestionar el control de acceso, lo que es esencial para cumplir con la norma ISO/IEC 27001:2022 A.9 sobre la gestión de accesos a la información y recursos críticos.
+
+---
+
+## Próximo Paso: Fase 3 — Crear GPOs Base (Seguridad, Contraseñas, Bloqueo, etc.)
+
+En la siguiente fase, comenzaremos a aplicar Políticas de Grupo (GPOs) para establecer configuraciones de seguridad, contraseñas, bloqueo de sesiones, y otras políticas organizativas.

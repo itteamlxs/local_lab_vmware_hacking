@@ -1,0 +1,100 @@
+# 🏗️ Paso 1: Configurar Active Directory en Windows Server 2022
+
+> ✅ Esta es la primera etapa en la construcción de tu laboratorio de ciberseguridad, siguiendo buenas prácticas de seguridad alineadas con los marcos **CIS Controls**, **NIST CSF**, e **ISO/IEC 27001:2022**.
+
+---
+
+## 🎯 Objetivo
+
+Convertir tu servidor Windows Server 2022 en un **Controlador de Dominio (Domain Controller)** para establecer la base del entorno de red empresarial y centralizar la gestión de usuarios, políticas y accesos.
+
+---
+
+## 🧩 Instrucciones Paso a Paso
+
+### 1. Abrir el Administrador del Servidor
+
+- Inicia sesión en el sistema.
+- Abre el **Administrador del servidor (Server Manager)** desde el menú de inicio.
+
+---
+
+### 2. Instalar el rol de Active Directory Domain Services (AD DS)
+
+1. Ir a **"Administrar" > "Agregar roles y características"**.
+2. Seleccionar:
+   - Tipo de instalación: **Instalación basada en características o roles**.
+   - Servidor de destino: Selecciona tu servidor local.
+3. En la lista de roles:
+   - ✅ Marca **Servicios de dominio de Active Directory (AD DS)**.
+   - Acepta las características adicionales sugeridas (ej. herramientas de administración de AD).
+
+4. Haz clic en **Siguiente** hasta llegar al botón **Instalar**.
+
+---
+
+### 3. Promover el servidor a Controlador de Dominio
+
+Una vez instalado el rol, aparecerá una advertencia en el Server Manager.
+
+1. Haz clic en **"Promover este servidor a controlador de dominio"**.
+2. En la nueva ventana:
+
+#### a. Elegir tipo de configuración:
+- Selecciona: ✅ **Agregar un nuevo bosque**.
+- Nombre del dominio raíz:  
+  Ejemplo: `empresa.local`
+
+> ⚠️ **Justificación:**  
+> Utilizar un dominio con la extensión `.local` es una buena práctica para entornos internos/laboratorios ya que evita conflictos con dominios externos reales, siguiendo recomendaciones del **CIS Control 4.7** y prácticas de **NIST SP 800-53 AC-3** para minimizar exposición innecesaria.
+
+#### b. Opciones del dominio:
+- Nivel funcional: **Windows Server 2022**.
+- Contraseña del **DSRM (Directory Services Restore Mode)**:
+  ➤ Usa una contraseña segura y guárdala en un gestor de contraseñas seguro.
+
+> 🔐 **Justificación:**  
+> El uso de credenciales seguras está alineado con el **CIS Control 5 (Gestión de Accesos y Cuentas)** y **ISO/IEC 27001 A.9 (Control de accesos)**.
+
+#### c. Configuraciones por defecto:
+- Deja las opciones de **DNS** y **NetBIOS** como vienen por defecto.
+- Revisa el resumen y presiona **Instalar**.
+
+---
+
+### 4. Reiniciar el servidor
+
+- El servidor se reiniciará automáticamente una vez completada la promoción.
+- Al volver a iniciar sesión, lo harás como **Administrador del Dominio** (`empresa\Administrador`).
+
+---
+
+### ✅ Verificación (Post-Instalación)
+
+1. Abre **Server Manager > Herramientas > Usuarios y Equipos de Active Directory**.
+2. Verifica que el dominio esté correctamente creado y puedas gestionar objetos (usuarios, equipos, etc.).
+
+---
+
+## 🛡️ Justificación desde Ciberseguridad
+
+Esta instalación sienta las bases para el gobierno de identidades y control de accesos, fundamentales en todo entorno seguro:
+
+### 🔍 Relevancia por marco:
+
+- **CIS Controls**
+  - **Control 4.7**: Minimizar funciones innecesarias. Solo se instala el rol necesario (AD DS).
+  - **Control 5**: Establecimiento de un sistema de autenticación centralizado.
+- **NIST Cybersecurity Framework (CSF)**
+  - **PR.AC-1 a PR.AC-4**: Control de acceso lógico, gestión de identidades y privilegios.
+- **ISO/IEC 27001:2022**
+  - **A.9 (Control de acceso)**: El AD permite aplicar políticas centralizadas para asegurar que solo usuarios autorizados accedan a recursos específicos.
+  - **A.12.1.2**: Control de cambios en sistemas operativos (instalación segura y documentada).
+
+> 📌 **Resumen:** Este paso transforma el servidor en el núcleo de control del dominio, lo que habilita la creación de políticas de grupo (GPO), administración de usuarios, controles de acceso, y auditorías de seguridad. Una implementación correcta y mínima garantiza una **superficie de ataque reducida**, una práctica clave en todos los marcos de ciberseguridad.
+
+---
+
+¿Listo para continuar?  
+Cuando estés preparado, continúa con el **Paso 2: Crear las Unidades Organizativas (OU)**.
+

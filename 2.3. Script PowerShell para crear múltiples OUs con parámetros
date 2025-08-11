@@ -1,0 +1,62 @@
+````markdown
+## Script PowerShell para crear múltiples OUs con parámetros
+
+Te voy a dar un script sencillo, flexible y seguro que:
+
+- Recibe una lista de nombres de OUs como parámet. ro.
+- Crea las OUs bajo el dominio actual (raíz).
+- Verifica si ya existen para no duplicar.
+- Te muestra en pantalla lo que va haciendo.
+
+### 🧾 Script: Crear-OUs.ps1
+
+```powershell
+param (
+    [Parameter(Mandatory = $true)]
+    [string[]]$OUList
+)
+
+# Obtener el nombre del dominio actual
+$domain = (Get-ADDomain).DistinguishedName
+
+foreach ($ou in $OUList) {
+    $ouPath = "OU=$ou,$domain"
+
+    if (-not (Get-ADOrganizationalUnit -Filter "Name -eq '$ou'" -ErrorAction SilentlyContinue)) {
+        New-ADOrganizationalUnit -Name $ou -Path $domain
+        Write-Host "✅ OU '$ou' creada correctamente." -ForegroundColor Green
+    } else {
+        Write-Host "⚠️  OU '$ou' ya existe. Se omite." -ForegroundColor Yellow
+    }
+}
+````
+
+### 🧪 ¿Cómo usarlo?
+
+1. Guarda el script como `Crear-OUs.ps1`.
+2. Abre PowerShell como administrador (y con permisos de AD).
+3. Ejecuta el script así:
+
+```powershell
+.\Crear-OUs.ps1 -OUList "IT", "Contabilidad", "Gerencia", "AtencionCliente", "SoporteTecnico", "RRHH", "Marketing", "Servidores", "Grupos", "UsuariosGenerales", "Equipos"
+```
+
+### ✅ Resultado esperado:
+
+Te crea las OUs bajo el dominio raíz (ej. `DC=empresa,DC=local`) y muestra algo como:
+
+```bash
+✅ OU 'IT' creada correctamente.
+✅ OU 'Contabilidad' creada correctamente.
+⚠️  OU 'Gerencia' ya existe. Se omite.
+...
+```
+
+### 🔐 Seguridad y buenas prácticas:
+
+* **Validación**: El script verifica antes de crear las OUs, asegurándose de no pisar OUs existentes.
+* **Modularidad**: Puedes convertir el script en función o script remoto según sea necesario.
+* **Portabilidad**: Útil para reproducir la estructura en otros entornos (test, dev, prod).
+
+```
+```

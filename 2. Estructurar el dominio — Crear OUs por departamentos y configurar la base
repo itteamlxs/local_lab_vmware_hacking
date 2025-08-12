@@ -90,9 +90,3 @@ La segmentación del dominio en diferentes OUs es una práctica recomendada en l
 
 ### ISO/IEC 27001:2022 A.9: Control de Acceso
 La creación de OUs y grupos de seguridad ayuda a gestionar el control de acceso, lo que es esencial para cumplir con la norma ISO/IEC 27001:2022 A.9 sobre la gestión de accesos a la información y recursos críticos.
-
----
-
-## Próximo Paso: Fase 3 — Crear GPOs Base (Seguridad, Contraseñas, Bloqueo, etc.)
-
-En la siguiente fase, comenzaremos a aplicar Políticas de Grupo (GPOs) para establecer configuraciones de seguridad, contraseñas, bloqueo de sesiones, y otras políticas organizativas.

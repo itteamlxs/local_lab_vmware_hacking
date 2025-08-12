@@ -1,0 +1,172 @@
+# Basic Security GPOs (Group Policy Objects) Configuration
+
+Este documento describe las políticas de seguridad básicas que deben aplicarse a través de los GPOs (Group Policy Objects) en entornos Windows para mejorar la seguridad, reducir riesgos y proteger a la empresa contra accesos no autorizados.
+
+## 🎯 Objetivo
+
+El objetivo de esta configuración es proteger los sistemas contra accesos no autorizados, reducir riesgos y cumplir con los siguientes marcos de seguridad:
+
+* **CIS Control**: 4, 5, 14
+* **ISO/IEC 27001:2022**: A.5.23, A.5.24, A.9.2, A.9.4
+* **NIST CSF**: PR.AC, PR.IP
+
+## 🧱 GPOs de Seguridad Básicas
+
+### GPO #1 — Política de Contraseñas del Dominio (Domain Password Policy)
+
+#### Ruta:
+
+* **En inglés**:
+
+  * `Computer Configuration > Windows Settings > Security Settings > Account Policies > Password Policy`
+* **En español**:
+
+  * `Configuración del equipo > Configuración de Windows > Configuración de seguridad > Directivas de cuenta > Directiva de contraseñas`
+
+#### Configuración recomendada:
+
+| Política / Setting                          | Valor recomendado       |
+| ------------------------------------------- | ----------------------- |
+| Enforce password history                    | 24 passwords remembered |
+| Maximum password age                        | 60 days                 |
+| Minimum password age                        | 1 day                   |
+| Minimum password length                     | 12 characters           |
+| Password must meet complexity requirements  | Enabled (✔️)            |
+| Store passwords using reversible encryption | Disabled (❌)            |
+
+**Aplicación**: Se recomienda aplicar esta configuración en la **Default Domain Policy** (política por defecto del dominio).
+
+#### Relación con normas y marcos de seguridad:
+
+* **CIS Control**: 4, 5
+* **ISO/IEC 27001:2022**: A.5.23, A.5.24, A.9.2
+* **NIST CSF**: PR.AC
+
+---
+
+### GPO #2 — Bloqueo de Sesión tras Inactividad (Auto-lock after inactivity)
+
+#### Ruta:
+
+* **En inglés**:
+
+  * `Computer Configuration > Windows Settings > Security Settings > Local Policies > Security Options > Interactive logon: Machine inactivity limit`
+* **En español**:
+
+  * `Configuración del equipo > Configuración de Windows > Configuración de seguridad > Directivas locales > Opciones de seguridad > Inicio de sesión interactivo: Límite de inactividad del equipo`
+
+#### Configuración recomendada:
+
+* **Habilitar** con un valor de **600 segundos (10 minutos)**.
+
+**Descripción**: Esta configuración bloquea automáticamente la sesión si el usuario deja el equipo inactivo durante el tiempo especificado.
+
+#### Relación con normas y marcos de seguridad:
+
+* **CIS Control**: 4, 5
+* **ISO/IEC 27001:2022**: A.9.4
+* **NIST CSF**: PR.AC, PR.IP
+
+---
+
+### GPO #3 — Mensaje Legal al Iniciar Sesión (Legal Notice / Logon Banner)
+
+#### Ruta:
+
+* **En inglés**:
+
+  * `Computer Configuration > Windows Settings > Security Settings > Local Policies > Security Options`
+
+#### Configuración recomendada:
+
+| Setting (ENG)                    | Español                                          | Valor recomendado                                                                              |
+| -------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| Interactive logon: Message title | Inicio de sesión interactivo: Título del mensaje | "AUTHORIZED ACCESS ONLY"                                                                       |
+| Interactive logon: Message text  | Inicio de sesión interactivo: Texto del mensaje  | "This system is property of the company. Unauthorized use is prohibited and may be monitored." |
+
+**Descripción**: Esta política muestra un mensaje legal al iniciar sesión en los sistemas, disuadiendo el uso no autorizado.
+
+#### Relación con normas y marcos de seguridad:
+
+* **CIS Control**: 14
+* **ISO/IEC 27001:2022**: A.9.4
+* **NIST CSF**: PR.AC
+
+---
+
+### GPO #4 — Bloquear Dispositivos USB (Disable USB storage access)
+
+#### Ruta:
+
+* **En inglés**:
+
+  * `Computer Configuration > Administrative Templates > System > Removable Storage Access`
+
+#### Configuración recomendada:
+
+| Política (ENG)                                 | Español                                                           | Valor recomendado |
+| ---------------------------------------------- | ----------------------------------------------------------------- | ----------------- |
+| All Removable Storage classes: Deny all access | Todas las clases de almacenamiento extraíble: Denegar todo acceso | Enabled (✔️)      |
+| Removable Disks: Deny read access              | Discos extraíbles: Denegar acceso de lectura                      | Enabled (✔️)      |
+| Removable Disks: Deny write access             | Discos extraíbles: Denegar acceso de escritura                    | Enabled (✔️)      |
+
+**Aplicación**: Se recomienda aplicar esta configuración solo a Unidades Organizativas (OUs) sensibles como **Contabilidad** o **RRHH**, no globalmente.
+
+#### Relación con normas y marcos de seguridad:
+
+* **CIS Control**: 5
+* **ISO/IEC 27001:2022**: A.9.2
+* **NIST CSF**: PR.AC, PR.IP
+
+---
+
+### GPO #5 — Forzar Bloqueo al Salir de Suspensión (Require password on wake-up)
+
+#### Ruta:
+
+* **En inglés**:
+
+  * `Computer Configuration > Administrative Templates > System > Power Management > Sleep Settings`
+
+#### Configuración recomendada:
+
+| Configuración                                         | Valor recomendado |
+| ----------------------------------------------------- | ----------------- |
+| Require a password when a computer wakes (plugged in) | Enabled (✔️)      |
+| Require a password when a computer wakes (on battery) | Enabled (✔️)      |
+
+**Descripción**: Esta configuración obliga al usuario a ingresar una contraseña al reactivar el equipo desde el modo de suspensión, ya sea con o sin conexión a corriente.
+
+#### Relación con normas y marcos de seguridad:
+
+* **CIS Control**: 5, 14
+* **ISO/IEC 27001:2022**: A.9.2, A.9.4
+* **NIST CSF**: PR.AC
+
+---
+
+## 🛠️ Aplicación y Verificación de GPOs
+
+### Forzar actualización en cliente:
+
+```powershell
+gpupdate /force
+```
+
+### Ver políticas aplicadas:
+
+```powershell
+gpresult /r
+```
+
+---
+
+## 📌 Recomendaciones Adicionales
+
+Para mantener un control granular sobre las políticas de seguridad, es recomendable crear **GPOs separadas por tema** (por ejemplo, **GPO-PasswordPolicy**, **GPO-LockScreen**, etc.) y aplicarlas a **OUs específicas**, en lugar de aplicarlas globalmente al dominio.
+
+---
+
+## Conclusión
+
+La implementación de estas GPOs no solo mejorará la seguridad de los sistemas Windows, sino que también garantizará el cumplimiento de las normativas y estándares internacionales, como el **CIS**, **ISO/IEC 27001:2022**, y el **NIST CSF**.

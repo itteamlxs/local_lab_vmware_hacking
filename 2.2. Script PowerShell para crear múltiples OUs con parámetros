@@ -1,8 +1,6 @@
 ````
 ## Script PowerShell para crear múltiples OUs con parámetros
 
-Te voy a dar un script sencillo, flexible y seguro que:
-
 - Recibe una lista de nombres de OUs como parámet. ro.
 - Crea las OUs bajo el dominio actual (raíz).
 - Verifica si ya existen para no duplicar.

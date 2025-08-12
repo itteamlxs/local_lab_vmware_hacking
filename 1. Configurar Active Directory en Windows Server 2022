@@ -4,6 +4,37 @@
 
 ---
 
+---
+## Configuración IP en el servidor
+
+Como es un DC, seguro le pusiste IP fija. Verifica que tenga:
+
+IP estática válida
+
+Puerta de enlace (gateway) correcta
+
+DNS configurado (en un DC normalmente se apunta a sí mismo, pero puede haber problemas de resolución hacia afuera si no hay reenviadores)
+
+Ejemplo:
+
+makefile
+Copy
+Edit
+IP: 192.168.1.10
+Máscara: 255.255.255.0
+Gateway: 192.168.1.1
+DNS: 192.168.1.10 (el mismo servidor)
+3. Configuración de DNS reenviadores
+Como tu servidor apunta a sí mismo para DNS, necesitas decirle a tu Servidor DNS (dentro del Server Manager) a dónde reenviar las consultas externas (como google.com).
+
+👉 En el Administrador DNS:
+
+Click derecho en el nombre del servidor DNS > Propiedades > Pestaña "Reenviadores"
+
+Agrega 8.8.8.8 (Google DNS) o 1.1.1.1 (Cloudflare)
+
+---
+
 ## 🎯 Objetivo
 
 Convertir tu servidor Windows Server 2022 en un **Controlador de Dominio (Domain Controller)** para establecer la base del entorno de red empresarial y centralizar la gestión de usuarios, políticas y accesos.

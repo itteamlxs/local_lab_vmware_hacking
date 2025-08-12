@@ -91,8 +91,3 @@ Con su implementación, puedes cumplir con normativas de seguridad importantes c
 ---
 
 ¡Sigue esta guía para organizar de manera efectiva tu **Active Directory** y mejorar la seguridad de tu infraestructura!
-
-```
-
-Este formato está listo para un archivo `README.md` y se enfoca en explicar qué son las **OUs**, su funcionamiento y cómo contribuyen a la seguridad, destacando las prácticas recomendadas de **CIS**, **NIST** y **ISO 27001**. ¿Te gustaría ajustar algún detalle adicional o agregar algo más?
-```
